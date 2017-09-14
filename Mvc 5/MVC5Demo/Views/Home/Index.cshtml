@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@using ActiveDatabaseSoftware.ActiveQueryBuilder
+@using ActiveDatabaseSoftware.ActiveQueryBuilder.Web.Mvc.UI
+
+@Html.ActiveQueryBuilder(settings =>
+{
+    settings.PersistentConnection = false;
+    settings.Language = "auto";
+    settings.UseCustomLanguageFiles = false;
+    settings.CustomLanguagePath = "~/Language Files/";
+}).GetHtml()
+
+
+<div id="all">
+    <div id="content-container">
+        <div id="qb-ui">
+            @Html.ActiveQueryBuilder().ObjectTreeView(settings =>
+            {
+                settings.SortingType = ObjectsSortingType.Name;
+            }).GetHtml()
+
+            <div id="center">
+                @Html.ActiveQueryBuilder().SubQueryNavigationBar().GetHtml()
+                <div class="qb-ui-canvas-container block-flat">
+                    @Html.ActiveQueryBuilder().Canvas().GetHtml()
+                    @Html.ActiveQueryBuilder().Grid().GetHtml()
+                    @Html.ActiveQueryBuilder().StatusBar().GetHtml()
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        @Html.ActiveQueryBuilder().SqlEditor().GetHtml()
+    </div>
+</div>

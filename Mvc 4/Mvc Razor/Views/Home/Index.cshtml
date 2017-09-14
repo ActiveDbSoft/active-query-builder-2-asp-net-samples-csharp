@@ -1,0 +1,31 @@
+﻿@using System.Xml
+@using ActiveDatabaseSoftware.ActiveQueryBuilder
+@using ActiveDatabaseSoftware.ActiveQueryBuilder.Web.Mvc.UI
+@{
+    ViewBag.Title = "Home Page";
+}
+@Html.ActiveQueryBuilder().GetHtml()
+
+
+<div id="all">
+    <div id="content-container">
+        <div id="qb-ui">
+            @Html.ActiveQueryBuilder().ObjectTreeView(settings =>
+            {
+                settings.SortingType = ObjectsSortingType.Name;
+            }).GetHtml()
+
+            <div id="center">
+                @Html.ActiveQueryBuilder().SubQueryNavigationBar().GetHtml()
+                <div class="qb-ui-canvas-container block-flat">
+                    @Html.ActiveQueryBuilder().Canvas().GetHtml()
+                    @Html.ActiveQueryBuilder().Grid().GetHtml()
+                    @Html.ActiveQueryBuilder().StatusBar().GetHtml()
+                </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    @Html.ActiveQueryBuilder().SqlEditor().GetHtml()
+</div>
+

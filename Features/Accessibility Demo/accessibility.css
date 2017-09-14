@@ -1,0 +1,10 @@
+.ui-global-focus {
+	outline: 4px solid #FF0000 !important;
+    outline-offset: 0;
+    -moz-outline-radius: 0px;
+}
+
+.ui-button-icon-only.ui-state-focus, .ui-tabs-nav a.ui-global-focus {
+	outline: none !important;
+}
+

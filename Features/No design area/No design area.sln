@@ -1,0 +1,20 @@
+
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "No design area", "No design area.csproj", "{05899523-6A30-4523-BBB0-2CDA10741DDF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05899523-6A30-4523-BBB0-2CDA10741DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05899523-6A30-4523-BBB0-2CDA10741DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05899523-6A30-4523-BBB0-2CDA10741DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05899523-6A30-4523-BBB0-2CDA10741DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

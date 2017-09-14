@@ -1,0 +1,36 @@
+﻿@using System.Diagnostics
+@using System.Web.UI.WebControls
+@using MvcRazorQueryResults.Controllers
+@model dynamic
+@{
+	WebGrid grid = null;
+	if (Model != null)
+	{
+		grid = new WebGrid(
+			//source: Model, 
+			ajaxUpdateContainerId: "result-grid",
+			canSort:true,
+			canPage:true,
+			rowsPerPage: HomeController.PageSize
+			);
+		try
+		{
+			grid.PageIndex = ViewBag.CurrentPage - 1;
+			grid.Bind(Model, autoSortAndPage: false, rowCount: ViewBag.RowCount);
+		}
+		catch (Exception)
+		{
+		}
+	}
+}
+@if (grid != null)
+{
+    <div id="result-grid">
+        <div>@grid.GetHtml()</div>
+        <textarea style="width: 100%; height: 200px;">@ViewBag.Sql</textarea>
+    </div>
+}
+else
+{
+	<span style="color: red; font-weight: bold">@ViewBag.Message</span>
+}

@@ -1,0 +1,49 @@
+#qb-ui-editor {
+/*width:49%;*/
+/*float:left;*/
+	padding:0;
+}
+
+#alternate-sql {
+/*width:49%;*/
+/*float:left;*/
+    border-style: solid;
+    border-color: #DDDDDD;
+    border-width: 1px;
+    display: block;
+    position: relative;
+    width: 100%;
+    overflow: auto;
+    top: 0;
+    left: 0;
+}
+
+#alternate-sql textarea {
+    width: 100%;
+    height: 150px;
+    padding: 3px;
+    border: 0;
+    margin: 0;
+}
+
+.sql 
+{
+    position:relative;
+    padding:0;
+    width:100%;
+}
+
+#qb-ui-canvas {
+	height: 270px;
+}
+
+#qb-ui-tree
+{
+    height:511px;
+}
+
+#qb-ui-grid 
+{
+	height: 160px;
+}
+
