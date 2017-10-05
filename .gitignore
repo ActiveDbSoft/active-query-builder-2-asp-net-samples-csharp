@@ -1,7 +1,7 @@
 .vs
 *.csproj.user
+UpgradeLog.html
 packages
-
 bin
 obj
 Log.txt
