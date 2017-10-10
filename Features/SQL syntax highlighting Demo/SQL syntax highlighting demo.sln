@@ -1,7 +1,8 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQL Syntax Highlighting Demo", "SQL Syntax Highlighting Demo.csproj", "{A19310A7-CF08-4B45-AE22-831EFA35033A}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQL Syntax Highlighting Demo", "SQL Syntax Highlighting Demo.csproj", "{98BD6CB5-9995-4ABF-8848-B005C4D06515}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +10,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A19310A7-CF08-4B45-AE22-831EFA35033A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A19310A7-CF08-4B45-AE22-831EFA35033A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A19310A7-CF08-4B45-AE22-831EFA35033A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A19310A7-CF08-4B45-AE22-831EFA35033A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98BD6CB5-9995-4ABF-8848-B005C4D06515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98BD6CB5-9995-4ABF-8848-B005C4D06515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98BD6CB5-9995-4ABF-8848-B005C4D06515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98BD6CB5-9995-4ABF-8848-B005C4D06515}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57492537-31AD-4115-9461-30235EADCC66}
 	EndGlobalSection
 EndGlobal
