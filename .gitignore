@@ -1,6 +1,6 @@
 .vs
 *.csproj.user
-UpgradeLog.html
+UpgradeLog.htm
 packages
 bin
 obj
