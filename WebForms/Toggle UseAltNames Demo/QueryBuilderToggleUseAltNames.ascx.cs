@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+using System.IO;
 using ActiveDatabaseSoftware.ActiveQueryBuilder;
 
 namespace ToggleUseAltNames

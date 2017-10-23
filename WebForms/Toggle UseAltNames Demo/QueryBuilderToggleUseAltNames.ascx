@@ -1,5 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="QueryBuilderToggleUseAltNames.ascx.cs" Inherits="ToggleUseAltNames.QueryBuilderToggleUseAltNames" %>
-<%@ Register TagPrefix="AQB" Namespace="ActiveDatabaseSoftware.ActiveQueryBuilder.Web.Control" Assembly="ActiveDatabaseSoftware.ActiveQueryBuilder2.Web.Control, Version=2.13.5.0, Culture=neutral, PublicKeyToken=3cbcbcc9bf57ecde" %>
+<%@ Register TagPrefix="AQB" Namespace="ActiveDatabaseSoftware.ActiveQueryBuilder.Web.Control" Assembly="ActiveDatabaseSoftware.ActiveQueryBuilder2.Web.Control, Culture=neutral, PublicKeyToken=3cbcbcc9bf57ecde" %>
 <ASP:Button runat="server" OnClick="ToggleOnClick" Text="Toggle UseAlterNames" />
 <AQB:QueryBuilderControl ID="QueryBuilderControl1" runat="server" OnInit="QueryBuilderControl1_Init" />
 <div id="all">
