@@ -44,7 +44,10 @@ namespace MvcRazor.Controllers
 
             try
             {
-                queryBuilder.MetadataContainer.ImportFromXML(filterContext.HttpContext.Server.MapPath("/Northwind.xml"));
+                var path = ConfigurationManager.AppSettings["XmlMetaData"];
+				var xml = Path.Combine(Server.MapPath(""), path);
+				queryBuilder.MetadataContainer.ImportFromXML(xml);
+
                 queryBuilder.MetadataStructure.Refresh();
             }
             catch (Exception ex)

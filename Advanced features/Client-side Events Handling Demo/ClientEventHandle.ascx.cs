@@ -12,11 +12,12 @@ namespace Samples
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack) SQLEditor1.SQL = @"Select o.OrderID, c.CustomerID, s.ShipperID, o.ShipCity
-From Orders o Inner Join
-  Customers c On o.Customer_ID = c.ID Inner Join
-  Shippers s On s.ID = o.Shipper_ID
-Where o.ShipCity = 'A'";
+            if (!Page.IsPostBack)
+                SQLEditor1.SQL = @"Select o.OrderID, c.CustomerID, s.ShipperID, o.ShipCity
+                                    From Orders o Inner Join
+                                      Customers c On o.Customer_ID = c.ID Inner Join
+                                      Shippers s On s.ID = o.Shipper_ID
+                                    Where o.ShipCity = 'A'";
         }
 
         protected void SleepModeChanged(object sender, EventArgs e)
@@ -37,7 +38,9 @@ Where o.ShipCity = 'A'";
             // Load MetaData from XML document. File name stored in WEB.CONFIG file in [/configuration/appSettings/XmlMetaData] key
             try
             {
-                queryBuilder.MetadataContainer.ImportFromXML(Page.Server.MapPath(ConfigurationManager.AppSettings["XmlMetaData"]));
+                var path = ConfigurationManager.AppSettings["XmlMetaData"];
+                var xml = Path.Combine(Server.MapPath(""), path);
+                queryBuilder.MetadataContainer.ImportFromXML(xml);
                 queryBuilder.MetadataStructure.Refresh();
                 StatusBar1.Message.Information("Metadata loaded");
             }

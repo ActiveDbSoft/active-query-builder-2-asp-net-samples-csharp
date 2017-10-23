@@ -28,8 +28,9 @@ namespace MVC5Demo.Controllers
             // Denies metadata loading requests from the metadata provider
             queryBuilder.OfflineMode = true;
 
-            var pathToXml = filterContext.HttpContext.Server.MapPath("~\\Northwind.xml");
-            queryBuilder.MetadataContainer.ImportFromXML(pathToXml);
+            var path = ConfigurationManager.AppSettings["XmlMetaData"];
+			var xml = Path.Combine(Server.MapPath(""), path);
+			queryBuilder.MetadataContainer.ImportFromXML(xml);
 
             // Initialization of the Metadata Structure object that's
             // responsible for representation of metadata in a tree-like form

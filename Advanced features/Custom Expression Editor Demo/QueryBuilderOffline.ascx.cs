@@ -12,14 +12,15 @@ namespace Samples
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-	        if (!Page.IsPostBack) SQLEditor1.SQL = @"Select o.OrderID,
-  c.CustomerID,
-  s.ShipperID,
-  o.ShipCity
-From Orders o
-  Inner Join Customers c On o.CustomerID = c.CustomerID
-  Inner Join Shippers s On s.ShipperID = o.OrderID
-Where o.ShipCity = 'A'";
+	        if (!Page.IsPostBack)
+                SQLEditor1.SQL = @"Select o.OrderID,
+                                  c.CustomerID,
+                                  s.ShipperID,
+                                  o.ShipCity
+                                From Orders o
+                                  Inner Join Customers c On o.CustomerID = c.CustomerID
+                                  Inner Join Shippers s On s.ShipperID = o.OrderID
+                                Where o.ShipCity = 'A'";
         }
 
         protected void SleepModeChanged(object sender, EventArgs e)
@@ -33,14 +34,16 @@ public void QueryBuilderControl1_Init(object sender, EventArgs e)
             // Get instance of QueryBuilder
             QueryBuilder queryBuilder = QueryBuilderControl1.QueryBuilder;
             // Turn this property on to suppress parsing error messages when user types non-SELECT statements in the text editor.
-queryBuilder.BehaviorOptions.AllowSleepMode = true;
-queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
+            queryBuilder.BehaviorOptions.AllowSleepMode = true;
+            queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
 
             queryBuilder.OfflineMode = true;
             // Load MetaData from XML document. File name stored in WEB.CONFIG file in [/configuration/appSettings/XmlMetaData] key
             try
             {
-                queryBuilder.MetadataContainer.ImportFromXML(Page.Server.MapPath(ConfigurationManager.AppSettings["XmlMetaData"]));
+                var path = ConfigurationManager.AppSettings["XmlMetaData"];
+                var xml = Path.Combine(Server.MapPath(""), path);
+                queryBuilder.MetadataContainer.ImportFromXML(xml);
             }
             catch (Exception ex)
             {

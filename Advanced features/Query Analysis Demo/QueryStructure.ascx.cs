@@ -59,7 +59,10 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
             // Load MetaData from XML document. File name stored in WEB.CONFIG file in [/configuration/appSettings/XmlMetaData] key
             try
             {
-                queryBuilder.MetadataContainer.ImportFromXML(Page.Server.MapPath(ConfigurationManager.AppSettings["/Northwind.xml"]));
+                var path = ConfigurationManager.AppSettings["XmlMetaData"];
+				var xml = Path.Combine(Server.MapPath(""), path);
+				queryBuilder.MetadataContainer.ImportFromXML(xml);
+
                 queryBuilder.MetadataStructure.Refresh();
                 StatusBar1.Message.Information("Metadata loaded");
             }

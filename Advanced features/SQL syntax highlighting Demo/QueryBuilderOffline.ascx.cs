@@ -40,7 +40,9 @@ Where o.ShipCity = 'A'";
             // Load MetaData from XML document. File name stored in WEB.CONFIG file in [/configuration/appSettings/XmlMetaData] key
             try
             {
-                queryBuilder.MetadataContainer.ImportFromXML(Page.Server.MapPath(ConfigurationManager.AppSettings["XmlMetaData"]));
+                var path = ConfigurationManager.AppSettings["XmlMetaData"];
+				var xml = Path.Combine(Server.MapPath(""), path);
+				queryBuilder.MetadataContainer.ImportFromXML(xml);
             }
             catch (Exception ex)
             {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.OleDb;
 using System.IO;
 using ActiveDatabaseSoftware.ActiveQueryBuilder;
 
@@ -9,10 +9,12 @@ namespace Samples
 {
 	public partial class QueryBuilderOffline : System.Web.UI.UserControl
 	{
+	    private IDbConnection dbConnection;
 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            var connString = ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString;
+            dbConnection = new OleDbConnection(connString);
 		}
 
 		protected void SleepModeChanged(object sender, EventArgs e)
@@ -175,8 +177,7 @@ namespace Samples
 			}
 		}
 
-		private IDbConnection dbConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorks"].ConnectionString);
-		protected void btn3_Click(object sender, EventArgs e)
+        protected void btn3_Click(object sender, EventArgs e)
 		{
 			var queryBuilder1 = QueryBuilderControl1.QueryBuilder;
 

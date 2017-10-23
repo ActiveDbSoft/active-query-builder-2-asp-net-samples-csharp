@@ -44,8 +44,8 @@ public void QueryBuilderControl1_Init(object sender, EventArgs e)
             // Get instance of QueryBuilder
             QueryBuilder queryBuilder = QueryBuilderControl1.QueryBuilder;
             // Turn this property on to suppress parsing error messages when user types non-SELECT statements in the text editor.
-queryBuilder.BehaviorOptions.AllowSleepMode = true;
-queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
+			queryBuilder.BehaviorOptions.AllowSleepMode = true;
+			queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
 
             plainTextSQLBuilder = new PlainTextSQLBuilder { QueryBuilder = queryBuilder, KeywordFormat = KeywordFormat.UpperCase };
             plainTextSQLBuilder2 = new PlainTextSQLBuilder {QueryBuilder = queryBuilder, KeywordFormat = KeywordFormat.UpperCase, UseAltNames = false, ExpandVirtualObjects = true};
@@ -54,8 +54,11 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
             // Load MetaData from XML document. File name stored in WEB.CONFIG file in [/configuration/appSettings/XmlMetaData] key
             try
             {
-                queryBuilder.MetadataContainer.ImportFromXML(Page.Server.MapPath(ConfigurationManager.AppSettings["XmlMetaData"]));
-                queryBuilder.MetadataStructure.Refresh();
+                var path = ConfigurationManager.AppSettings["XmlMetaData"];
+				var xml = Path.Combine(Server.MapPath(""), path);
+				queryBuilder.MetadataContainer.ImportFromXML(xml);
+                
+				queryBuilder.MetadataStructure.Refresh();
                 StatusBar1.Message.Information("Metadata loaded");
             }
             catch (Exception ex)

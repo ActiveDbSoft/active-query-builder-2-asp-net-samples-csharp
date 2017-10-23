@@ -15,7 +15,10 @@ namespace ToggleUseAltNames
             queryBuilder.BehaviorOptions.UseAltNames = true;
 
             queryBuilder.OfflineMode = true;
-            queryBuilder.MetadataContainer.ImportFromXML(Page.Server.MapPath("db2_sample_with_alt_names.xml"));
+            
+			var path = ConfigurationManager.AppSettings["XmlMetaData"];
+			var xml = Path.Combine(Server.MapPath(""), path);
+			queryBuilder.MetadataContainer.ImportFromXML(xml);
         }
 
         protected void ToggleOnClick(object sender, EventArgs e)

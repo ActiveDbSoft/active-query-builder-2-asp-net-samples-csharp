@@ -29,8 +29,11 @@ namespace MvcAspx.Controllers
             // Load MetaData from XML document
             try
             {
-                queryBuilder.MetadataContainer.ImportFromXML(filterContext.HttpContext.Server.MapPath("/Northwind.xml"));
-                queryBuilder.MetadataStructure.Refresh();
+				var path = ConfigurationManager.AppSettings["XmlMetaData"];
+				var xml = Path.Combine(Server.MapPath(""), path);
+				queryBuilder.MetadataContainer.ImportFromXML(xml);
+                
+				queryBuilder.MetadataStructure.Refresh();
             }
             catch (Exception ex)
             {

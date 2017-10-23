@@ -43,8 +43,11 @@ namespace Alternate_Names.Controllers
             // Load MetaData from XML document. File name stored in WEB.CONFIG file in [/configuration/appSettings/XmlMetaData] key
             try
             {
-                queryBuilder.MetadataContainer.ImportFromXML(filterContext.HttpContext.Server.MapPath(ConfigurationManager.AppSettings["XmlMetaDataDB2"]));
-                queryBuilder.MetadataStructure.Refresh();
+                var path = ConfigurationManager.AppSettings["XmlMetaData"];
+				var xml = Path.Combine(Server.MapPath(""), path);
+				queryBuilder.MetadataContainer.ImportFromXML(xml);
+								
+				queryBuilder.MetadataStructure.Refresh();
                 item.Message.Information("Metadata loaded");
             }
             catch (Exception ex)

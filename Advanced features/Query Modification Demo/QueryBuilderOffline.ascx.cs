@@ -42,11 +42,18 @@ namespace Samples
 			queryBuilder.BehaviorOptions.AllowSleepMode = true;
 			// Turn this property on to suppress parsing error messages when user types non-SELECT statements in the text editor.
 			queryBuilder.BehaviorOptions.AllowSleepMode = true;
-			if (queryBuilder.SyntaxProvider == null) queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
+			
+			if (queryBuilder.SyntaxProvider == null)
+				queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
+			
 			queryBuilder.OfflineMode = true;
-			queryBuilder.MetadataContainer.ImportFromXML(Page.Server.MapPath("Northwind.xml"));
+			
+			var path = ConfigurationManager.AppSettings["XmlMetaData"];
+			var xml = Path.Combine(Server.MapPath(""), path);
+			queryBuilder.MetadataContainer.ImportFromXML(xml)
+			
 			queryBuilder.MetadataStructure.Refresh();
-            StatusBar1.Message.Information("Metadata loaded");
+			StatusBar1.Message.Information("Metadata loaded");
         }
 
 		protected void btn1_Click(object sender, EventArgs e)

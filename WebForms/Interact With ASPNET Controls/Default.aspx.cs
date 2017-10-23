@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Web.UI;
 using ActiveDatabaseSoftware.ActiveQueryBuilder;
@@ -33,7 +34,7 @@ namespace Samples
 
         public static List<Preset> Presets = new List<Preset> { 
             new Preset{
-                XmlMetaData = "/Northwind.xml", 
+                XmlMetaData = "..\..\Sample databases\Northwind.xml", 
                 SQL = @"Select o.OrderID, c.CustomerID As a1, c.ContactName
 From Orders o Inner Join
   Customers c On o.CustomerID = c.CustomerID Inner Join
@@ -41,7 +42,7 @@ From Orders o Inner Join
   Region On Shippers.CompanyName = Region.RegionID
 Where o.ShipCity = 'A'"}, 
             new Preset{
-                XmlMetaData = "/db2_sample_with_alt_names.xml", 
+                XmlMetaData = "..\..\Sample databases\db2_sample_with_alt_names.xml", 
                 SQL = @"Select Employees.[Employee ID], Employees.[First Name],
   [Employee Photos].[Photo Image], [Employee Resumes].Resume
 From [Employee Photos] Inner Join
@@ -84,8 +85,11 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
             {
                 var sql = queryBuilder.SQL;
                 queryBuilder.SQL = string.Empty;
-                queryBuilder.MetadataContainer.ImportFromXML(Server.MapPath(PresetHelper.CurrentPreset.XmlMetaData));
-                queryBuilder.MetadataStructure.Refresh();
+				
+                var xml = Path.Combine(Server.MapPath(""), PresetHelper.CurrentPreset.XmlMetaData);
+				queryBuilder.MetadataContainer.ImportFromXML(xml);
+                
+				queryBuilder.MetadataStructure.Refresh();
                 queryBuilder.SQL = sql;
                 StatusBar1.Message.Information("Metadata loaded");
             }
