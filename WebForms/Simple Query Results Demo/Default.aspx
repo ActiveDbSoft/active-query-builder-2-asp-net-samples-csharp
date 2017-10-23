@@ -170,14 +170,20 @@
 			    });
 			});
 
-        function executeQuery() {
-            QB.Web.Application.syncCriteriaBuilder(function () {
-                var button = document.getElementById("<%= Button1.ClientID %>");
-                var name = button.name;
-                if (name == null || name == '') name = button.id;
-                __doPostBack(name, "");
-            });
-        }
+            function executeQuery() {
+                QB.Web.Application.syncCriteriaBuilder(function () {
+                    if (QB.Web.Application.SQL.trim() === '')
+                        return alert('Query is empty');
+
+                    var button = document.getElementById("<%= Button1.ClientID %>");
+                    var name = button.name;
+
+                    if (name == null || name == '')
+                        name = button.id;
+
+                    __doPostBack(name, "");
+                });
+            }
 
             function getQueryParams(queryParams) {
                 params = queryParams;

@@ -28,7 +28,7 @@ queryBuilder.BehaviorOptions.AllowSleepMode = true;
 queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
 
 			// you may load metadata from the database connection using live database connection and metadata provider
-			var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Northwind"].ConnectionString);
+			var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorks2014"].ConnectionString);
 
 			if (string.IsNullOrEmpty(connection.ConnectionString))
 			{
@@ -72,7 +72,12 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-//			if (!Page.IsPostBack) SQLEditor1.SQL = @"Select * From Production.Product";
+			if (!Page.IsPostBack)
+                SQLEditor1.SQL = @"Select Person.Address.AddressID,
+                                      Person.Address.AddressLine1,
+                                      Person.Address.AddressLine2,
+                                      Person.Address.City
+                                    From Person.Address";
 		}
 
 		protected void Button1_Click(object sender, EventArgs e)
@@ -118,29 +123,36 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
 		private int _vic;
 		private void UpdateGrid()
 		{
-			QueryBuilder queryBuilder1 = (QueryBuilderControl1).QueryBuilder;
-
 			dataGridView1.DataSource = null;
-			if (queryBuilder1.MetadataProvider == null) return;
 
-			var cmd = (SqlCommand)queryBuilder1.MetadataProvider.Connection.CreateCommand();
+		    var mProvider = QueryBuilderControl1.QueryBuilder.MetadataProvider;
+
+            if (mProvider == null)
+                return;
+
+			var cmd = (SqlCommand)mProvider.Connection.CreateCommand();
 			cmd.CommandTimeout = 30;
 			cmd.CommandText = CriteriaBuilder1.QueryTransformer.Sql;
 
-			try
+		    if (string.IsNullOrEmpty(cmd.CommandText))
+		    {
+		        SessionStore.Current.Message.Error("Sql is empty");
+                return;
+		    }
+
+
+            try
 			{
 				var adapter = new SqlDataAdapter(cmd);
-				foreach (var paramDto in SessionStore.Current.ClientQueryParams)
-				{
+
+                foreach (var paramDto in SessionStore.Current.ClientQueryParams)
 					cmd.Parameters.Add(paramDto.Name, paramDto.Value);
-				}
 
 				var dataset = new DataSet();
 				adapter.Fill(dataset, "QueryResult");
 
 				_dt = dataset.Tables["QueryResult"];
 				_vic = GetCount();
-
 
 				var ods = new ObjectDataSource();
 				ods.ID = "ods" + dataGridView1.ID;
