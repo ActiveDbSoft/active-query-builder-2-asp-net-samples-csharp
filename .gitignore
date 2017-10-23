@@ -1,5 +1,6 @@
 .vs
 *.csproj.user
+/_/*.*
 UpgradeLog.htm
 packages
 bin
