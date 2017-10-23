@@ -1,6 +1,9 @@
 .vs
 *.csproj.user
-/_/*.*
+**/js/*
+**/img/*
+**/css/*
+**/_/*
 UpgradeLog.htm
 packages
 bin
