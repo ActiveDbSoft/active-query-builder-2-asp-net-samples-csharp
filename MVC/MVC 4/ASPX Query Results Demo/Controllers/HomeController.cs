@@ -60,6 +60,7 @@ namespace MvcAspx.Controllers
 					ViewBag.Data = ConvertToDictionary(dataset.Tables["QueryResult"]);
 					ViewBag.RowCount = GetRowCount(queryBuilder, queryTransformer);
 				    ViewBag.Sql = cmd.CommandText;
+				    ViewBag.Sql = cmd.CommandText;
 				}
 				catch (Exception ex)
 				{
@@ -170,7 +171,7 @@ namespace MvcAspx.Controllers
             //var provider = "Microsoft.ACE.OLEDB.12.0";
             var provider = "Microsoft.Jet.OLEDB.4.0";
             var path = ConfigurationManager.AppSettings["dbpath"];
-            var xml = Path.Combine(server.MapPath(""), path);
+            var xml = Path.Combine(server.MapPath("~"), path);
             var connectionString = string.Format("Provider={0};Data Source={1};Persist Security Info=False;", provider, xml);
 
             return new OleDbConnection(connectionString);

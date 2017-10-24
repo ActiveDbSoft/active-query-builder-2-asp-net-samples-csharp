@@ -44,7 +44,7 @@ namespace Alternate_Names.Controllers
             try
             {
                 var path = ConfigurationManager.AppSettings["XmlMetaData"];
-				var xml = Path.Combine(Server.MapPath(""), path);
+				var xml = Path.Combine(Server.MapPath("~"), path);
 				queryBuilder.MetadataContainer.ImportFromXML(xml);
 								
 				queryBuilder.MetadataStructure.Refresh();

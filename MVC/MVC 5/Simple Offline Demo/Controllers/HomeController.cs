@@ -29,7 +29,7 @@ namespace MVC5Demo.Controllers
             queryBuilder.OfflineMode = true;
 
             var path = ConfigurationManager.AppSettings["XmlMetaData"];
-			var xml = Path.Combine(Server.MapPath(""), path);
+			var xml = Path.Combine(Server.MapPath("~"), path);
 			queryBuilder.MetadataContainer.ImportFromXML(xml);
 
             // Initialization of the Metadata Structure object that's
