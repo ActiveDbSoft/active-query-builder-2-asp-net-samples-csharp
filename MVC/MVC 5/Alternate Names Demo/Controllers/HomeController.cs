@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Configuration;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -44,7 +45,7 @@ namespace Alternate_Names.Controllers
             try
             {
                 var path = ConfigurationManager.AppSettings["XmlMetaData"];
-				var xml = Path.Combine(Server.MapPath("~"), path);
+				var xml = Path.Combine(filterContext.HttpContext.Server.MapPath("~"), path);
 				queryBuilder.MetadataContainer.ImportFromXML(xml);
 								
 				queryBuilder.MetadataStructure.Refresh();
