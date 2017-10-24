@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.IO;
 using ActiveDatabaseSoftware.ActiveQueryBuilder;
 
@@ -14,7 +14,7 @@ namespace Samples
         protected void Page_Load(object sender, EventArgs e)
         {
             var connString = ConfigurationManager.ConnectionStrings["dbconn"].ConnectionString;
-            dbConnection = new OleDbConnection(connString);
+            dbConnection = new SqlConnection(connString);
 		}
 
 		protected void SleepModeChanged(object sender, EventArgs e)
@@ -185,6 +185,7 @@ namespace Samples
 			{
 				try
 				{
+					dbConnection.Close();
 					dbConnection.Close();
 					dbConnection.Open();
 

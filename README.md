@@ -1,6 +1,6 @@
 # C# Demo Projects for [Active Query Builder ASP.NET Edition](http://www.activequerybuilder.com/product_asp.html)
 
-##### Also, check [the VB.NET Demo projects repository]() for the same.
+##### Also, check [the VB.NET Demo projects repository](https://github.com/ActiveDbSoft/active-query-builder-2-asp-net-samples-vb) for the same.
 #
 ## What is Active Query Builder?
 Active Query Builder is a visual query builder and SQL parser component for ASP.NET (WebForms and MVC). 
@@ -12,7 +12,7 @@ Active Query Builder is a visual query builder and SQL parser component for ASP.
 The demo projects in this repository illustrate various aspects of the component's functionality from basic usage scenarios to advanced features. They are also included the trial and full versions of Active Query Builder.
 A brief description of each project can be found below.
 ##### Prerequisites:
-- Visual Studio 2013 or higher,
+- Visual Studio 2012 or higher,
 - .NET Framework 4.0 or higher.
 - [Active Query Builder ASP.NET NuGet package](https://www.nuget.org/packages/ActiveQueryBuilder.ASPNET/).
 
