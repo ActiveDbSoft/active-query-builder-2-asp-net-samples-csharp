@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Configuration;
 using System.Web.Mvc;
 using ActiveDatabaseSoftware.ActiveQueryBuilder;
 using ActiveDatabaseSoftware.ActiveQueryBuilder.Web.Mvc.Filters;
@@ -45,7 +47,7 @@ namespace MvcRazor.Controllers
             try
             {
                 var path = ConfigurationManager.AppSettings["XmlMetaData"];
-				var xml = Path.Combine(Server.MapPath("~"), path);
+				var xml = Path.Combine(filterContext.HttpContext.Server.MapPath("~"), path);
 				queryBuilder.MetadataContainer.ImportFromXML(xml);
 
                 queryBuilder.MetadataStructure.Refresh();
