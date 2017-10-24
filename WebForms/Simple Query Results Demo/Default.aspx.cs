@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
-using System.Data.SqlClient;
+using System.IO;
 using System.Web.UI.WebControls;
 using ActiveDatabaseSoftware.ActiveQueryBuilder;
 using ActiveDatabaseSoftware.ActiveQueryBuilder.QueryTransformer;
@@ -21,14 +21,14 @@ namespace Samples
 public void QueryBuilderControl1_Init(object sender, EventArgs e)
 		{
 			// Get instance of QueryBuilder
-			QueryBuilder queryBuilder = (QueryBuilderControl1).QueryBuilder;
+			QueryBuilder queryBuilder = QueryBuilderControl1.QueryBuilder;
 			queryBuilder.OfflineMode = false;
 			// Turn this property on to suppress parsing error messages when user types non-SELECT statements in the text editor.
-queryBuilder.BehaviorOptions.AllowSleepMode = true;
-queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
+            queryBuilder.BehaviorOptions.AllowSleepMode = true;
+            queryBuilder.SyntaxProvider = new MSAccessSyntaxProvider();
 
 			// you may load metadata from the database connection using live database connection and metadata provider
-			var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AdventureWorks2014"].ConnectionString);
+		    var connection = CreateConnection();
 
 			if (string.IsNullOrEmpty(connection.ConnectionString))
 			{
@@ -40,7 +40,7 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
 
 			try
 			{
-				var metadataProvider = new MSSQLMetadataProvider();
+				var metadataProvider = new OLEDBMetadataProvider();
 				metadataProvider.Connection = connection;
 				queryBuilder.MetadataProvider = metadataProvider;
 			}
@@ -70,14 +70,23 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
             }
 		}
 
-		protected void Page_Load(object sender, EventArgs e)
+	    private IDbConnection CreateConnection()
+	    {
+	        //var provider = "Microsoft.ACE.OLEDB.12.0";
+	        var provider = "Microsoft.Jet.OLEDB.4.0";
+	        var path = ConfigurationManager.AppSettings["dbpath"];
+	        var xml = Path.Combine(Server.MapPath(""), path);
+	        var connectionString = string.Format("Provider={0};Data Source={1};Persist Security Info=False;", provider, xml);
+	        return new OleDbConnection(connectionString);
+	    }
+
+        protected void Page_Load(object sender, EventArgs e)
 		{
 			if (!Page.IsPostBack)
-                SQLEditor1.SQL = @"Select Person.Address.AddressID,
-                                      Person.Address.AddressLine1,
-                                      Person.Address.AddressLine2,
-                                      Person.Address.City
-                                    From Person.Address";
+                SQLEditor1.SQL = @"Select Employees.EmployeeID,
+                                      Employees.LastName,
+                                      Employees.FirstName
+                                    From Employees";
 		}
 
 		protected void Button1_Click(object sender, EventArgs e)
@@ -130,7 +139,7 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
             if (mProvider == null)
                 return;
 
-			var cmd = (SqlCommand)mProvider.Connection.CreateCommand();
+			OleDbCommand cmd = (OleDbCommand)mProvider.Connection.CreateCommand();
 			cmd.CommandTimeout = 30;
 			cmd.CommandText = CriteriaBuilder1.QueryTransformer.Sql;
 
@@ -143,7 +152,7 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
 
             try
 			{
-				var adapter = new SqlDataAdapter(cmd);
+				var adapter = new OleDbDataAdapter(cmd);
 
                 foreach (var paramDto in SessionStore.Current.ClientQueryParams)
 					cmd.Parameters.Add(paramDto.Name, paramDto.Value);
@@ -269,7 +278,7 @@ queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
 			}
 			catch(Exception){}
 
-			var cmd = (SqlCommand)queryBuilder1.MetadataProvider.Connection.CreateCommand();
+			var cmd = (OleDbCommand)queryBuilder1.MetadataProvider.Connection.CreateCommand();
 			cmd.CommandTimeout = 30;
 			cmd.CommandText = CriteriaBuilder1.QueryTransformer.Sql;
 

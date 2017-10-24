@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.OleDb;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using ActiveDatabaseSoftware.ActiveQueryBuilder;
 using ActiveDatabaseSoftware.ActiveQueryBuilder.QueryTransformer;
@@ -37,7 +39,7 @@ namespace MvcRazorQueryResults.Controllers
 
 			if (queryBuilder.MetadataProvider != null)
 			{
-				var cmd = (SqlCommand)queryBuilder.MetadataProvider.Connection.CreateCommand();
+				var cmd = (OleDbCommand)queryBuilder.MetadataProvider.Connection.CreateCommand();
 				cmd.CommandTimeout = 30;
                 ViewBag.Sql = cmd.CommandText = queryTransformer.Sql;
 
@@ -51,7 +53,7 @@ namespace MvcRazorQueryResults.Controllers
 						cmd.Parameters.AddWithValue(paramDto.Name, paramDto.Value);
 					}
 
-					var adapter = new SqlDataAdapter(cmd);
+					var adapter = new OleDbDataAdapter(cmd);
 					var dataset = new DataSet();
 					adapter.Fill(dataset, "QueryResult");
 					model = ConvertToDictionary(dataset.Tables["QueryResult"]);
@@ -79,7 +81,7 @@ namespace MvcRazorQueryResults.Controllers
                 queryTransformer.ResultCount = null;
                 var selectedColumn = new SelectedColumn(null, "count(*)");
                 queryTransformer.Aggregations.Add(selectedColumn, "cnt");
-                var cmd = (SqlCommand)queryBuilder.MetadataProvider.Connection.CreateCommand();
+                var cmd = (OleDbCommand)queryBuilder.MetadataProvider.Connection.CreateCommand();
                 cmd.CommandTimeout = 30;
                 cmd.CommandText = queryTransformer.Sql;
                 queryTransformer.Aggregations.Remove(selectedColumn);
@@ -133,23 +135,13 @@ namespace MvcRazorQueryResults.Controllers
             // Get instance of QueryBuilder
             var queryBuilder = item.QueryBuilder;
             queryBuilder.OfflineMode = false;
-            queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
-
-            var connectionSection = ConfigurationManager.ConnectionStrings["YourDB"];
-
-            if (connectionSection == null || string.IsNullOrEmpty(connectionSection.ConnectionString))
-            {
-                string message = "Can't find in [web.config] key <configuration>/<connectionStrings><add key=\"YourDB\" connectionString=\"...\">!";
-                Logger.Error(message);
-                SessionStore.Current.Message.Error(message);
-                return;
-            }
-
+            queryBuilder.SyntaxProvider = new MSAccessSyntaxProvider();
+            
             try
             {
                 // you may load metadata from the database connection using live database connection and metadata provider
-                var connection = new SqlConnection(connectionSection.ConnectionString);
-                queryBuilder.MetadataProvider = new MSSQLMetadataProvider { Connection = connection };
+                var connection = CreateConnection(filterContext.HttpContext.Server);
+                queryBuilder.MetadataProvider = new OLEDBMetadataProvider { Connection = connection };
             }
             catch (Exception ex)
             {
@@ -170,6 +162,16 @@ namespace MvcRazorQueryResults.Controllers
                 SessionStore.Current.Message.Error(message);
                 queryBuilder.OfflineMode = true;
             }
+        }
+
+        private IDbConnection CreateConnection(HttpServerUtilityBase server)
+        {
+            //var provider = "Microsoft.ACE.OLEDB.12.0";
+            var provider = "Microsoft.Jet.OLEDB.4.0";
+            var path = ConfigurationManager.AppSettings["dbpath"];
+            var xml = Path.Combine(server.MapPath(""), path);
+            var connectionString = string.Format("Provider={0};Data Source={1};Persist Security Info=False;", provider, xml);
+            return new OleDbConnection(connectionString);
         }
     }
 }

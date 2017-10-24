@@ -1,5 +1,7 @@
 ﻿using System;
-using System.Data.SqlClient;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
 using ActiveDatabaseSoftware.ActiveQueryBuilder;
 using Logger = ActiveDatabaseSoftware.ActiveQueryBuilder.Web.Server.Logger;
 
@@ -11,32 +13,25 @@ namespace ChangeConnection
         {
             // Get instance of QueryBuilder
             QueryBuilder queryBuilder = QueryBuilderControl1.QueryBuilder;
-            queryBuilder.SyntaxProvider = new MSSQLSyntaxProvider();
-            queryBuilder.MetadataProvider = new MSSQLMetadataProvider();
+            queryBuilder.SyntaxProvider = new MSAccessSyntaxProvider();
+            queryBuilder.MetadataProvider = new OLEDBMetadataProvider();
         }
 
         protected void FirstOnClick(object sender, EventArgs e)
         {
-            SetConnection("AdventureWorks2014");
+            SetConnection("Nwind.mdb");
         }
 
         protected void SecondOnClick(object sender, EventArgs e)
         {
-            SetConnection("TestSelfLinks");
+            SetConnection("demo.mdb");
         }
 
         private void SetConnection(string dbName)
         {
             var queryBuilder = QueryBuilderControl1.QueryBuilder;
-
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
-            {
-                DataSource = @".\sqlexpress",
-                InitialCatalog = dbName,
-                IntegratedSecurity = true
-            };
-
-            queryBuilder.MetadataProvider.Connection = new SqlConnection(builder.ConnectionString);
+            
+            queryBuilder.MetadataProvider.Connection = CreateConnection(dbName);
 
             try
             {
@@ -51,6 +46,17 @@ namespace ChangeConnection
                 Logger.Error(message, ex);
                 StatusBar1.Message.Error(message + " Check log.txt for details.");
             }
+        }
+
+        private IDbConnection CreateConnection(string dbname)
+        {
+            //var provider = "Microsoft.ACE.OLEDB.12.0";
+            var provider = "Microsoft.Jet.OLEDB.4.0";
+            var path = @"..\..\Sample databases\" + dbname;
+   
+               var xml = Path.Combine(Server.MapPath(""), path);
+            var connectionString = string.Format("Provider={0};Data Source={1};Persist Security Info=False;", provider, xml);
+            return new OleDbConnection(connectionString);
         }
     }
 }

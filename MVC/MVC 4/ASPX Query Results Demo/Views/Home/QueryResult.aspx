@@ -35,14 +35,9 @@
 				canPage: true,
 				rowsPerPage: HomeController.PageSize
 				);
-			try
-			{
-				grid.PageIndex = ViewBag.CurrentPage - 1;
-				grid.Bind(Model, autoSortAndPage: false, rowCount: ViewBag.RowCount);
-			}
-			catch (Exception)
-			{
-			}
+			
+			grid.PageIndex = ViewBag.CurrentPage - 1;
+			grid.Bind(Model, autoSortAndPage: false, rowCount: ViewBag.RowCount);
 		}
 
 	%>
