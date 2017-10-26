@@ -4,9 +4,13 @@
 #
 ## What is Active Query Builder?
 Active Query Builder is a visual query builder and SQL parser component for ASP.NET (WebForms and MVC). 
-##### Links:
-- Active Query Builder web site: http://www.activequerybuilder.com/,
+##### Details:
+- [Active Query Builder web site](http://www.activequerybuilder.com/),
 - [Active Query Builder ASP.NET Edition details page](http://www.activequerybuilder.com/product_asp.html).
+
+## How do I get Active Query Builder?
+- [Download the trial version](http://www.activequerybuilder.com/trequest.html?request=asp) from the product web site
+- Get it by installing the [ActiveQueryBuilder.ASPNET NuGet package](https://www.nuget.org/packages/ActiveQueryBuilder.ASPNET/).
 
 ## What's in this repository?
 The demo projects in this repository illustrate various aspects of the component's functionality from basic usage scenarios to advanced features. They are also included the trial and full versions of Active Query Builder.
@@ -16,7 +20,7 @@ A brief description of each project can be found below.
 - .NET Framework 4.0 or higher.
 - [Active Query Builder ASP.NET NuGet package](https://www.nuget.org/packages/ActiveQueryBuilder.ASPNET/).
 
-## How to get demo projects up and running?
+## How to get these demo projects up and running?
 
 1. Clone this repository to your PC.
 2. Open the .sln file of the demo project you want to explore in Visual Studio.
